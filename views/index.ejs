@@ -1,0 +1,69 @@
+<% include ./partials/header %>
+
+
+<div class="row container">
+
+<div class="search  col-lg-6 col-md-6 col-xs-12">
+
+    <form action="/weather" method="post">
+        <input value="<%= searchWord %>" name="city" type="text" class="ghost-input" placeholder="Enter a City"
+               required>
+        <button type="submit" class="btn btn-default submit-button">
+            <svg aria-hidden="true" data-prefix="fas" data-icon="cloud" role="img" xmlns="http://www.w3.org/2000/svg"
+                 viewBox="0 0 640 512" class="svg-inline--fa fa-cloud fa-w-20 fa-spin fa-sm">
+                <path fill="currentColor"
+                      d="M537.585 226.56C541.725 215.836 544 204.184 544 192c0-53.019-42.981-96-96-96-19.729 0-38.065 5.954-53.316 16.159C367.042 64.248 315.288 32 256 32c-88.366 0-160 71.634-160 160 0 2.728.07 5.439.204 8.133C40.171 219.845 0 273.227 0 336c0 79.529 64.471 144 144 144h368c70.692 0 128-57.308 128-128 0-61.93-43.983-113.586-102.415-125.44z"
+                      class=""></path>
+            </svg>
+            <i class="fa fa-cloud"></i>
+        </button>
+    </form>
+
+
+        <% if (res){ %>
+    <div class="result well">
+        <% if (res.new){ %>
+        <!--let user add this location-->
+        <form action="/weather/locations" method="post">
+            <input style="display: none;" name="link" type="text" value="<%= res.link %>">
+            <input style="display: none;" name="location" type="text" value="<%= res.location %>">
+            <button class="btn btn-success" type="submit"><i class="fa fa-plus"></i></button>
+        </form>
+        <% } %>
+        <span class="top"><img src="<%= res.stateImg %>"><%= res.location %></span></br>
+        <span class="temp"><%= res.temperature %></span></br>
+
+
+        <span><%= res.humidity %></span></br>
+
+        <span><%= res.windSpeed %></span></br>
+    </div>
+    <% } %>
+        <% if (err) { %>
+    <div class="result well">
+        <span><%= err %></span></br>
+    </div>
+        <% } %>
+
+
+
+</div>
+
+    <div class="myLocations  col-lg-6 col-md-6 col-xs-12">
+        <% if (locations != null && locations.length > 0){ %>
+        <!---->
+        <% locations.forEach(function (info) { %>
+        <div class="item">
+            <form action="/weather" method="post">
+                <input style="display: none;" name="link" type="text" value="<%= info.link %>">
+                <button class="btn btn-default" type="submit"><%= info.location %></button>
+            </form>
+        </div>
+        <% }); %>
+
+        <!---->
+
+        <% } %>
+    </div>
+</div>
+<% include ./partials/footer %>

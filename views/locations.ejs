@@ -1,0 +1,18 @@
+<% include ./partials/header %>
+<div class="container">
+
+    <% if (locations != null && locations.length > 0){%>
+    <%  locations.forEach(function (info) {%>
+    <div class="locations">
+        <form action="/weather" method="post" >
+            <input style="display: none;" name="link" type="text" value="<%= info.link%>">
+            <button class="btn btn-success" type="submit"><%= info.location%></button>
+        </form>
+    </div>
+    <%});%>
+
+
+    <%}%>
+
+</div>
+<% include ./partials/footer %>
